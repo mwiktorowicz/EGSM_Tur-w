@@ -12,30 +12,54 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-Notatniki są w folderze `EGMS/`.
+Notatniki są w folderze `EGMS/` i uruchamia się je w kolejności:
+
+1. `EGMS_data_preparation.ipynb` – tylko gdy trzeba odtworzyć dane wejściowe
+   (wymaga surowych danych w `EGMS/dane_EGMS/`, których nie ma w repozytorium),
+2. `EGMS_analysis_pipeline.ipynb` – ok. 2 min, zapisuje `EGMS_Turow_U_results.csv`,
+3. `EGMS_buildings_analysis.ipynb` – zapisuje `budynki_EGMS_results.gpkg`.
+
+Wyniki są już w repozytorium, więc do własnych analiz nie trzeba niczego uruchamiać.
 
 ## Pliki
 
 | Plik | Opis |
 |---|---|
-| `EGMS_data_preparation.ipynb` | porządkuje dane przycięte w QGIS i zapisuje pliki poniżej |
-| `EGMS_analysis_pipeline.ipynb` | cechy szeregów czasowych, Isolation Forest, K-means |
-| `EGMS_buildings_analysis.ipynb` | przypisanie punktów PS do budynków |
 | `EGMS_Turow_U.csv` | EGMS L3, składowa pionowa – 6268 PS, 239 dat (2020–2024, bez zim) |
 | `EGMS_Turow_E.csv` | EGMS L3, składowa wschód–zachód – te same PS i daty |
 | `budynki_Turow.gpkg` | 39 156 budynków z EUBUCCO (CZ, PL, DE), EPSG:3035 |
 | `daty_bez_zimy.txt` | lista dat zachowanych w szeregu czasowym |
+| `EGMS_Turow_U_results.csv` | **wynik** – cechy, `anomaly_score`, `anomaly` i `cluster` dla każdego PS |
+| `budynki_EGMS_results.gpkg` | **wynik** – budynki z najbliższym PS (do 30 m) i atrybutami EUBUCCO (`kraj`, `type`, `height`, `floors`) |
 
-Surowe dane (`EGMS/dane_EGMS/`) nie są w repozytorium, bo są za duże – potrzebne
-tylko do ponownego uruchomienia `EGMS_data_preparation.ipynb`.
+Układ współrzędnych wyników: **EPSG:3035** (można je otworzyć bezpośrednio w QGIS).
 
-## Do zrobienia
+## Ustalenia analizy bazowej
 
-W notatnikach analizy podmienić nazwy plików `EGMS_Bytom.csv` →
-`EGMS_Turow_U.csv` i `budynki_polaczone_all.gpkg` → `budynki_Turow.gpkg`,
-a w notatniku budynków wpisać wartość `MAX_DISTANCE`.
+- `k = 4` (uzasadnienie w notatniku: metoda łokcia + silhouette),
+- `MAX_DISTANCE = 30 m` przy przypisaniu PS do budynków,
+- za anomalie uznano 5% PS o najwyższym `anomaly_score` (314 PS),
+- ok. 89% anomalii należy do dwóch klastrów szybkiego osiadania (ok. −31 mm/rok),
+  położonych prawie wyłącznie w obrębie odkrywki i zwałowiska.
+
+## Dodatkowe analizy (do podziału w zespole)
+
+Każdy pracuje we własnym notatniku (`EGMS/nazwisko_temat.ipynb`) na plikach
+wynikowych i nie edytuje trzech notatników bazowych.
+
+1. Wariant bez kopalni – wymaskowanie odkrywki i zwałowiska, porównanie anomalii i klastrów z wariantem pełnym.
+2. Strefa wpływu kopalni – prędkość osiadania w funkcji odległości od odkrywki.
+3. Porównanie PL / DE / CZ – prędkości i odsetek anomalii w poszczególnych krajach.
+4. Składowa E – ta sama analiza dla `EGMS_Turow_E.csv`, połączenie składowych U i E.
+5. Hotspoty przestrzenne – Moran's I / Getis-Ord Gi*, czy anomalie tworzą skupiska.
+6. Strefy anomalii – DBSCAN na współrzędnych anomalnych PS.
+7. Inne metody grupowania – porównanie K-means z DBSCAN/HDBSCAN lub Gaussian Mixture.
+8. Wskaźnik ryzyka budynków – prędkość, `anomaly_score`, wysokość i typ budynku.
+9. Wrażliwość na `MAX_DISTANCE` – wyniki dla 30 / 50 / 70 m.
+10. Mapy w QGIS do sprawozdania.
 
 ## Źródła
 
 - EGMS: https://egms.land.copernicus.eu/
+- Dokumentacja EGMS: https://land.copernicus.eu/en/products/european-ground-motion-service?tab=documentation
 - Budynki EUBUCCO: https://eubucco.com/data/download/v0.2

@@ -1,3 +1,5 @@
 .venv/
 EGMS/dane_EGMS/
 .ipynb_checkpoints/
+*.gpkg-wal
+*.gpkg-shm
