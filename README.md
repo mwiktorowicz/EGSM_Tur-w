@@ -31,6 +31,10 @@ Wyniki są już w repozytorium, więc do własnych analiz nie trzeba niczego uru
 | `daty_bez_zimy.txt` | lista dat zachowanych w szeregu czasowym |
 | `EGMS_Turow_U_results.csv` | **wynik** – cechy, `anomaly_score`, `anomaly` i `cluster` dla każdego PS |
 | `budynki_EGMS_results.gpkg` | **wynik** – budynki z najbliższym PS (do 30 m) i atrybutami EUBUCCO (`kraj`, `type`, `height`, `floors`) |
+| `EGMS_Turow_bez_kopalni_U.csv`, `..._E.csv` | wybór z QGIS – mimo nazwy zawiera PS **odkrywki** (858 PS); używany jako maska kopalni |
+| `EGMS_Turow_bez_kopalni_U_results.csv` | **wynik** wariantu bez kopalni (`EGMS_bez_kopalni_analysis.ipynb`) – 5185 PS, kolumny jak `EGMS_Turow_U_results.csv` |
+| `budynki_EGMS_bez_kopalni_results.gpkg` | **wynik** – budynki z najbliższym PS bez kopalni (`ryzyko_budynkow_bez_kopalni.ipynb`) |
+| `budynki_ryzyko_bez_kopalni.gpkg` | **wynik** – wskaźnik ryzyka budynków bez kopalni + porównanie z wariantem pełnym |
 
 Układ współrzędnych wyników: **EPSG:3035** (można je otworzyć bezpośrednio w QGIS).
 
@@ -47,7 +51,8 @@ Układ współrzędnych wyników: **EPSG:3035** (można je otworzyć bezpośredn
 Każdy pracuje we własnym notatniku (`EGMS/nazwisko_temat.ipynb`) na plikach
 wynikowych i nie edytuje trzech notatników bazowych.
 
-1. Wariant bez kopalni – wymaskowanie odkrywki i zwałowiska, porównanie anomalii i klastrów z wariantem pełnym.
+1. Wariant bez kopalni – wymaskowanie odkrywki i zwałowiska, porównanie anomalii i klastrów z wariantem pełnym
+   (**zrobione:** `EGMS_bez_kopalni_analysis.ipynb`, budynki: `ryzyko_budynkow_bez_kopalni.ipynb`).
 2. Strefa wpływu kopalni – prędkość osiadania w funkcji odległości od odkrywki.
 3. Porównanie PL / DE / CZ – prędkości i odsetek anomalii w poszczególnych krajach.
 4. Składowa E – ta sama analiza dla `EGMS_Turow_E.csv`, połączenie składowych U i E.
