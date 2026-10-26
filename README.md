@@ -47,22 +47,16 @@ Układ współrzędnych wyników: **EPSG:3035** (można je otworzyć bezpośredn
 - ok. 89% anomalii należy do dwóch klastrów szybkiego osiadania (ok. −31 mm/rok),
   położonych prawie wyłącznie w obrębie odkrywki i zwałowiska.
 
-## Dodatkowe analizy (do podziału w zespole)
-
-Każdy pracuje we własnym notatniku (`EGMS/nazwisko_temat.ipynb`) na plikach
-wynikowych i nie edytuje trzech notatników bazowych.
+## Dodatkowe analizy 
 
 1. Wariant bez kopalni – wymaskowanie odkrywki i zwałowiska, porównanie anomalii i klastrów z wariantem pełnym
    (**zrobione:** `EGMS_bez_kopalni_analysis.ipynb`, budynki: `ryzyko_budynkow_bez_kopalni.ipynb`).
 2. Strefa wpływu kopalni – prędkość osiadania w funkcji odległości od odkrywki.
 3. Porównanie PL / DE / CZ – prędkości i odsetek anomalii w poszczególnych krajach.
 4. Składowa E – ta sama analiza dla `EGMS_Turow_E.csv`, połączenie składowych U i E.
-5. Hotspoty przestrzenne – Moran's I / Getis-Ord Gi*, czy anomalie tworzą skupiska.
-6. Strefy anomalii – DBSCAN na współrzędnych anomalnych PS.
-7. Inne metody grupowania – porównanie K-means z DBSCAN/HDBSCAN lub Gaussian Mixture.
-8. Wskaźnik ryzyka budynków – prędkość, `anomaly_score`, wysokość i typ budynku.
-9. Wrażliwość na `MAX_DISTANCE` – wyniki dla 30 / 50 / 70 m.
-10. Mapy w QGIS do sprawozdania.
+5. Wskaźnik ryzyka budynków – prędkość, `anomaly_score`, wysokość i typ budynku.
+6. Wrażliwość na `MAX_DISTANCE` – wyniki dla 30 / 50 / 70 m.
+
 
 ## Źródła
 
